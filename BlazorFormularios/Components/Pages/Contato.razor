@@ -1,0 +1,32 @@
+@page "/contato"
+@using BlazorFormularios.Components.Models
+
+<EditForm Model="modelo" OnValidSubmit="Enviar" FormName="ContatoForm">
+    <DataAnnotationsValidator />
+
+    <InputText @bind-Value="modelo.Nome" placeholder="Nome" />
+    <ValidationMessage For="@(() => modelo.Nome)" />
+    <InputText @bind-Value="modelo.Email" placeholder="Email" />
+    <ValidationMessage For="@(() => modelo.Email)" />
+    <InputNumber @bind-Value="modelo.Idade" placeholder="Idade" />
+    <ValidationMessage For="@(() => modelo.Idade)" />
+    <InputCheckbox @bind-Value="modelo.Newsletter" /> Receber Newsletter
+    
+    <button type="submit">Enviar</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public ContatoModel modelo { get; set; } = new();
+    private bool enviado = false;
+
+    private void Enviar()
+    {
+        enviado = true;
+    }
+}
+
+@if (enviado)
+{
+    <p>Formulário enviado com sucesso!</p>
+}
